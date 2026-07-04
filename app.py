@@ -5,7 +5,7 @@
 Reuses the data/compute layer from technicals_dashboard.py.
 """
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 import plotly.graph_objects as go
 import streamlit as st
@@ -168,10 +168,19 @@ with right:
               else "rgba(179,45,45,0.85)" if (v or 0) <= -0.5
               else "rgba(150,150,150,0.7)" for v in ch["zscore"]]
     fig = go.Figure()
-    fig.add_bar(x=ch["dates"], y=ch["zscore"], marker_color=colors, showlegend=False)
+    fig.add_bar(x=ch["dates"], y=ch["zscore"], marker_color=colors,
+                marker_line_width=0, showlegend=False)
     for y in (d["band_sigma"], -d["band_sigma"]):
         fig.add_hline(y=y, line=dict(color="#999", width=1, dash="dash"))
     fig.update_layout(base_layout(240), bargap=0)
+    # collapse non-trading days so the bars sit flush against each other
+    d0, d1 = date.fromisoformat(ch["dates"][0]), date.fromisoformat(ch["dates"][-1])
+    have = set(ch["dates"])
+    holidays = [str(d0 + timedelta(n)) for n in range((d1 - d0).days + 1)
+                if (d0 + timedelta(n)).weekday() < 5
+                and str(d0 + timedelta(n)) not in have]
+    fig.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"]),
+                                  dict(values=holidays)])
     st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
 # --- forward-return stats table ----------------------------------------------
