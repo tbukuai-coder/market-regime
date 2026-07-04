@@ -36,4 +36,4 @@ Tunable behavior is concentrated in the module-level constants of `technicals_da
 
 The longest MA period given is treated as "the" long SMA everywhere (z-score, band, annualized slope card), so changing MA periods changes those definitions too.
 
-The visual reference for the UI is `reference-screenshot.png` in this directory. Deliberate deviations from it: the tab menu (MARKETS, FIXED INCOME, etc.) was removed — the app is technicals-only; don't reintroduce it — and the dark header bar is now white.
+The UI was originally built against a reference screenshot (since removed from the repo). Deliberate deviations from it: the tab menu (MARKETS, FIXED INCOME, etc.) was removed — the app is technicals-only; don't reintroduce it — and the dark header bar is now white.

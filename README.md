@@ -4,8 +4,6 @@ Post-market technicals dashboard: loads a ticker's full daily history and shows
 price vs. moving averages with a ±1.5σ band, SMA slopes, a z-score vs. the
 200 DMA, and 40-day forward-return statistics grouped by z-score band.
 
-![reference](reference-screenshot.png)
-
 ## Run
 
 ```bash
